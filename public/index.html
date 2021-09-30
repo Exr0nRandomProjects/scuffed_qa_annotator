@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Question Labeller</title>
+        <meta name="description" content="Label data, compete, get acknowledged">
+        <meta name="author" content="Exr0n">
+
+        <meta property="og:title" content="Question Labeller">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="http://exr0n.com:3260">
+        <meta property="og:description" content="Label Data, Compete, Get Acknowledged!">
+        <meta property="og:image" content="image.png">
+
+        <link rel="icon" href="/favicon.ico">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    </head>
+
+    <body class="overflow-hidden bg-gray-700">
+        <div class="z-30 w-screen m-6 flex">
+            <div id="controls" class="m-auto flex-shrink flex flex-row content-center space-x-6">
+                <div class="rounded p-2 transform hover:scale-105 bg-red-300" data-value=1>Definitely Wrong</div>
+                <div class="rounded p-2 transform hover:scale-105 bg-red-100" data-value=2>Probably Wrong</div>
+                <div class="rounded p-2 transform hover:scale-105 bg-yellow-300" data-value=3>Maybe Correct</div>
+                <div class="rounded p-2 transform hover:scale-105 bg-green-100" data-value=4>Probably Correct</div>
+                <div class="rounded p-2 transform hover:scale-105 bg-green-300" data-value=5>Definitely Correct</div>
+            </div>
+        </div>
+        <div id="content" class="w-screen h-screen">
+            <div class="space-y-4 text-mono text-white">
+                <table class="m-auto">
+                <tr><td class="text-gray-400">question</td><td class='max-w-prose p-4'id='display-question'></td></tr>
+                <tr><td class="text-gray-400">model output</td><td class='max-w-prose p-4'id='display-output'></td></tr>
+                <tr><td class="text-gray-400">correct answer</td><td class='max-w-prose p-4'id='display-answer'></td></tr>
+                <tr><td class="text-gray-400">context</td><td class='max-w-prose p-4'id='display-context'></td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="w-1/4 fixed top-0 left-0 h-screen p-2 text-gray-400 text-mono">
+            Leaderboard:
+            <li id="leaderboard" class="list-none p-2"></li>
+        </div>
+        <script src="static/main.mjs" type="module"></script>
+    </body>
+</html>
+
