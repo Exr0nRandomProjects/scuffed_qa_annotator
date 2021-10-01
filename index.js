@@ -5,22 +5,29 @@ const fs = require('fs');
 const csv = require('fast-csv');
 
 // vars
-let users = {}
+let users = require('./leaderboard.json');
 let logger = fs.createWriteStream('output.log');
 let to_check = []
+let next_question_index = 0;
 
 // setup
-//fs.createReadStream(__dirname + '/data.csv')
-//    .pipe(csv.parse({ headers: true, delimiter: '	' }))
-//    .on('error', console.error)
-//    .on('data', to_check.push)
-//    .on('end', rows => console.log('processed rows:', rows, to_check));
 
 const data_contents = fs.readFileSync(__dirname + '/data.tsv', { encoding: 'utf8' });
 to_check = data_contents.split('\n').map(l => l.split('	'))
     .map(([id, context, question, output, answers]) => ({
         id: id, context: context, question: question, output: output, answers: answers
     }));
+
+// util
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+function save_to_leaderboard(users) {
+    fs.writeFile('leaderboard.json', JSON.stringify(users), e => { if (e) console.err(e); });
+}
 
 // express
 const express = require('express');
@@ -33,8 +40,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/v1/next_item', (req, res) => {
-    res.json(to_check[Math.floor(Math.random() * to_check.length)]);
-    //return res.json({ id: 'bontehu', question: 'how long will it take me to code this?', output: 'seventy five years', answers: '75 years', context: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias error harum maxime adipisci amet laborum.' });
+    //res.json(to_check[Math.floor(Math.random() * to_check.length)]);
+    res.json(to_check[next_question_index % to_check.length]);
+    next_question_index += 1;
+    if (next_question_index % to_check.length == 0)
+        shuffleArray(to_check);
 });
 
 app.get('/api/v1/leaderboard', (req, res) => {
@@ -48,6 +58,7 @@ app.post('/api/v1/submit_item', (req, res) => {
     console.log(req.body)
     logger.write(JSON.stringify(req.body) + '\n');
     users[user] += 1;
+    save_to_leaderboard(users);
     res.end('ok');
 });
 

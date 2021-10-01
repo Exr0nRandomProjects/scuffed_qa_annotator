@@ -23,14 +23,15 @@
 
     </head>
 
-    <body class="overflow-hidden bg-gray-700">
-        <div class="z-30 w-screen m-6 flex">
-            <div id="controls" class="m-auto flex-shrink flex flex-row content-center space-x-6">
-                <div class="rounded p-2 transform hover:scale-105 bg-red-300" data-value=1>Definitely Wrong</div>
-                <div class="rounded p-2 transform hover:scale-105 bg-red-100" data-value=2>Probably Wrong</div>
-                <div class="rounded p-2 transform hover:scale-105 bg-yellow-300" data-value=3>Maybe Correct</div>
-                <div class="rounded p-2 transform hover:scale-105 bg-green-100" data-value=4>Probably Correct</div>
-                <div class="rounded p-2 transform hover:scale-105 bg-green-300" data-value=5>Definitely Correct</div>
+    <body class="bg-gray-700">
+        <div class="z-30 w-screen m-6 flex flex-col">
+            <div class="m-auto flex-shrink text-gray-200">How correct is the model output in comparison to the correct answer?</div>
+            <div id="controls" class="m-auto flex-shrink flex flex-wrap flex-row items-center content-center space-x-2 space-y-2 md:space-x-6">
+                <div class="rounded p-2 h-10 w-48 transform hover:scale-105 bg-red-300" data-value=1>Definitely Wrong</div>
+                <div class="rounded p-2 h-10 w-48 transform hover:scale-105 bg-red-100" data-value=2>Probably Wrong</div>
+                <div class="rounded p-2 h-10 w-48 transform hover:scale-105 bg-yellow-300" data-value=3>Maybe Correct</div>
+                <div class="rounded p-2 h-10 w-48 transform hover:scale-105 bg-green-100" data-value=4>Probably Correct</div>
+                <div class="rounded p-2 h-10 w-48 transform hover:scale-105 bg-green-300" data-value=5>Definitely Correct</div>
             </div>
         </div>
         <div id="content" class="w-screen h-screen">
@@ -43,7 +44,7 @@
                 </table>
             </div>
         </div>
-        <div class="w-1/4 fixed top-0 left-0 h-screen p-2 text-gray-400 text-mono">
+        <div class="hidden md:block w-1/4 fixed top-0 left-0 h-screen p-2 text-gray-400 text-mono">
             Leaderboard:
             <li id="leaderboard" class="list-none p-2"></li>
         </div>
