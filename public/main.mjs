@@ -1,28 +1,4 @@
-const username = prompt('Please enter your display name:');
-
 const leaderboard_list = document.getElementById('leaderboard');
-
-const DOM = {
-    question: document.getElementById('display-question'),
-    output: document.getElementById('display-output'),
-    answers: document.getElementById('display-answer'),
-    context: document.getElementById('display-context'),
-}
-
-let current_id = null;
-
-function populate_questions() {
-    fetch('/api/v1/next_item')
-        .then(res => res.json())
-        .then(x => {
-            for (let [k, v] of Object.entries(x)) {
-                if (['question', 'output', 'context', 'answers'].includes(k))
-                    DOM[k].innerHTML = v;
-            }
-            current_id = x.id;
-        }).catch(console.error);
-}
-
 function update_leaderboard() {
     fetch('/api/v1/leaderboard')
     .then(res => res.json())
@@ -40,6 +16,38 @@ function update_leaderboard() {
         });
 }
 setInterval(update_leaderboard, 1000);
+
+let username = null;
+if (localStorage.getItem('name')) 
+    username = localStorage.getItem('name');
+else
+    Promise.all([
+        fetch('https://random-word-form.herokuapp.com/random/adjective').then(x => x.json()),
+        fetch('https://random-word-form.herokuapp.com/random/noun').then(x => x.json())
+    ]).then(([[a], [n]]) => {
+        username = prompt('Please enter your display name:', a + ' ' + n);
+        localStorage.setItem('name', username);
+    });
+
+const DOM = {
+    question: document.getElementById('display-question'),
+    output: document.getElementById('display-output'),
+    answers: document.getElementById('display-answer'),
+    context: document.getElementById('display-context'),
+}
+let current_id = null;
+
+function populate_questions() {
+    fetch('/api/v1/next_item')
+        .then(res => res.json())
+        .then(x => {
+            for (let [k, v] of Object.entries(x)) {
+                if (['question', 'output', 'context', 'answers'].includes(k))
+                    DOM[k].innerHTML = v;
+            }
+            current_id = x.id;
+        }).catch(console.error);
+}
 
 function clicked(e) {
     fetch('/api/v1/submit_item', {
