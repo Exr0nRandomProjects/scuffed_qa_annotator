@@ -2,9 +2,8 @@ const leaderboard_list = document.getElementById('leaderboard');
 function update_leaderboard() {
     fetch('/api/v1/leaderboard')
     .then(res => res.json())
-    .then(names => names.filter(n => n != 'null'))
     .then(names => {
-        const n = Object.entries(names);
+        const n = Object.entries(names).filter(n => n[0] != 'null');
         n.sort((a, b) => b[1] - a[1]);
         while (leaderboard_list.firstChild)
             leaderboard_list.removeChild(leaderboard_list.lastChild);
