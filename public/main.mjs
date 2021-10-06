@@ -2,18 +2,19 @@ const leaderboard_list = document.getElementById('leaderboard');
 function update_leaderboard() {
     fetch('/api/v1/leaderboard')
     .then(res => res.json())
-        .then(names => {
-            const n = Object.entries(names);
-            n.sort((a, b) => b[1] - a[1]);
-            while (leaderboard_list.firstChild)
-                leaderboard_list.removeChild(leaderboard_list.lastChild);
-            for (let [name, score] of n) {
-                const elem = document.createElement('li');  // TODO: constantly reflowwing 
-                elem.innerHTML = `${name}: ${score}`;
-                if (name === username) elem.setAttributeNS(null, 'style', 'color: white;');
-                leaderboard_list.appendChild(elem);
-            }
-        });
+    .then(names => names.filter(n => n != 'null'))
+    .then(names => {
+        const n = Object.entries(names);
+        n.sort((a, b) => b[1] - a[1]);
+        while (leaderboard_list.firstChild)
+            leaderboard_list.removeChild(leaderboard_list.lastChild);
+        for (let [name, score] of n) {
+            const elem = document.createElement('li');  // TODO: constantly reflowwing 
+            elem.innerHTML = `${name}: ${score}`;
+            if (name === username) elem.setAttributeNS(null, 'style', 'color: white;');
+            leaderboard_list.appendChild(elem);
+        }
+    });
 }
 setInterval(update_leaderboard, 1000);
 
