@@ -6,7 +6,7 @@ const csv = require('fast-csv');
 
 // vars
 let users = require('./leaderboard.json');
-let logger = fs.createWriteStream('output.log');
+let logger = fs.createWriteStream('output.log', { flags: 'a' });
 let to_check = []
 let next_question_index = 0;
 
