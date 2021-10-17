@@ -1,6 +1,6 @@
 # Instructions 
 
-*Based on human conversation expectations, does the learner answer fully and correctly answer the question?*
+**Based on human conversation expectations, does the submitted answer fully and correctly answer the question?**
 
 Start by comparing the Question, Submitted Answer, and Correct Answer. If you are unsure, read the Context in the dropdown below. Finally, if you are still unsure, select the "maybe", "probably", or "definetly" correct/incorrect based on your confidence.
 
@@ -14,7 +14,7 @@ Need clarification? Please email me at: spotyie [at] gmail [dot] com
 
 | Question 1 | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
-| where is the notebook supposed to take place | abandoned house | ['seabrook island south carolina'] | The model output is completely unrelated to the correct answer. |
+| where is the notebook supposed to take place | abandoned house | ['seabrook island south carolina'] | The submitted answer is completely unrelated to the correct answer. |
 
 <details><summary>Context</summary> In 1940, Seabrook Island, South Carolina, Noah Calhoun is smitten with 17 year old heiress Allison "Allie " Hamilton after seeing her at a carnival, and they have a summer love affair. Noah takes Allie to an abandoned house that he intends to buy for them. They try to make love, but are interrupted by Noah's friend Fin with the news that Allie's parents have the police looking for her. </details>
 <br>
@@ -22,7 +22,7 @@ Need clarification? Please email me at: spotyie [at] gmail [dot] com
 
 | Question 2 | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
-| how many wimbledons did borg win in a row | fifth | ['five'] | The model output is a gramatically invalid answer to the question.  |
+| how many wimbledons did borg win in a row | fifth | ['five'] | The submitted answer is a gramatically invalid answer to the question.  |
 
 <details><summary>Context</summary> Borg won his fifth consecutive Wimbledon singles title, the 1980 Wimbledon Men's Singles final, by defeating McEnroe in a five - set match, often cited as the best Wimbledon final ever played -- the only comparable match being the 2008 Federer -- Nadal final. Having lost the opening set to an all - out McEnroe assault, Borg took the next two and had two championship points at 5 -- 4 in the fourth. However, McEnroe averted disaster and went on to level the match in Wimbledon's most memorable 34 - point tiebreaker, which he won 18 -- 16. In the fourth - set tiebreak, McEnroe saved five match points, and Borg six set points, before McEnroe won the set. Björn served first to begin the 5th set and fell behind 15 -- 40. Borg then won 19 straight points on serve in the deciding set and prevailed after 3 hours, 53 minutes. Borg himself commented years later that this was the first time that he was afraid that he would lose, as well as feeling that it was the beginning of the end of his dominance. </details>
 <br>
