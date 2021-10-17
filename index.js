@@ -39,6 +39,10 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/instructions', (req, res) => {
+    res.sendFile(__dirname + '/public/instructions.html');
+})
+
 app.get('/api/v1/next_item', (req, res) => {
     //res.json(to_check[Math.floor(Math.random() * to_check.length)]);
     res.json(to_check[next_question_index % to_check.length]);
