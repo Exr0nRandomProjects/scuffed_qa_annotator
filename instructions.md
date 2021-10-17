@@ -6,7 +6,7 @@ Start by comparing the Question, Submitted Answer, and Correct Answer. If you ar
 
 Be sure the submitted answer provides enough detail to fully answer the question. See below for examples.
 
-Need clarification? Please email me at: spotyie [at] gmail [dot] com
+Need clarification? Please contact us at: hsmlxl [at] yahoo [dot] com
 
 
 # Sample Incorrect Answers
