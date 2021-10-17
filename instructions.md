@@ -1,3 +1,5 @@
+# Instructions 
+
 Based on human conversation expectations, does the learner answer fully and correctly answer the question?
 
 Start by comparing the question, submitted answer, and correct answer. If you are unsure, read the context. Finally, if you are still unsure, select the "maybe", "probably", or "definetly" correct/incorrect based on your confidence.
@@ -5,11 +7,10 @@ Start by comparing the question, submitted answer, and correct answer. If you ar
 Be sure the submitted answer provides enough detail to fully answer the question. See below for examples.
 
 5. bold the answer occurances in the context
-6. add color
 
 --- 
 
-These sample answers are incorrect
+# Sample Incorrect Answers
 
 
 | Question | Submitted Answer | Correct Answer | Reason |
@@ -18,6 +19,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> In 1940, Seabrook Island, South Carolina, Noah Calhoun is smitten with 17 year old heiress Allison "Allie " Hamilton after seeing her at a carnival, and they have a summer love affair. Noah takes Allie to an abandoned house that he intends to buy for them. They try to make love, but are interrupted by Noah's friend Fin with the news that Allie's parents have the police looking for her. </details>
 
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -25,6 +27,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> Borg won his fifth consecutive Wimbledon singles title, the 1980 Wimbledon Men's Singles final, by defeating McEnroe in a five - set match, often cited as the best Wimbledon final ever played -- the only comparable match being the 2008 Federer -- Nadal final. Having lost the opening set to an all - out McEnroe assault, Borg took the next two and had two championship points at 5 -- 4 in the fourth. However, McEnroe averted disaster and went on to level the match in Wimbledon's most memorable 34 - point tiebreaker, which he won 18 -- 16. In the fourth - set tiebreak, McEnroe saved five match points, and Borg six set points, before McEnroe won the set. Björn served first to begin the 5th set and fell behind 15 -- 40. Borg then won 19 straight points on serve in the deciding set and prevailed after 3 hours, 53 minutes. Borg himself commented years later that this was the first time that he was afraid that he would lose, as well as feeling that it was the beginning of the end of his dominance. </details>
 
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -32,6 +35,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> In biochemistry and metabolism, beta - oxidation is the catabolic process by which fatty acid molecules are broken down in the cytosol in prokaryotes and in the mitochondria in eukaryotes to generate acetyl - CoA, which enters the citric acid cycle, and NADH and FADH, which are co-enzymes used in the electron transport chain. It is named as such because the beta carbon of the fatty acid undergoes oxidation to a carbonyl group. Beta - oxidation is primarily facilitated by the mitochondrial trifunctional protein, an enzyme complex associated with the inner mitochondrial membrane, although some fatty acids are oxidized in peroxisomes.  </details>
  
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -39,6 +43,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> The Citizenship Clause overruled the Supreme Court's Dred Scott decision that black people were not citizens and could not become citizens, nor enjoy the benefits of citizenship. Some members of Congress voted for the Fourteenth Amendment in order to eliminate doubts about the constitutionality of the Civil Rights Act of 1866, or to ensure that no subsequent Congress could later repeal or alter the main provisions of that Act. The Civil Rights Act of 1866 had granted citizenship to all persons born in the United States if they were not subject to a foreign power, and this clause of the Fourteenth Amendment constitutionalized this rule.  </details>
  
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -46,6 +51,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> The Oregon Medical Insurance Pool  (OMIP), instituted in 1987, is designed to provide medical insurance coverage for residents of the state of Oregon with pre-existing conditions  (i.e. HIV / AIDS, diabetes, etc.) who do not already have private insurance. OMIP is administered by Oregon's Office of Private Health Partnerships through Blue Cross / Blue Shield. It functions similarly to other private insurance.  </details>
 
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -53,6 +59,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> Much of the city's tax base dissipated, leading to problems with funding education, sanitation, and traffic control within the city limits. In addition, residents in unincorporated suburbs had difficulty obtaining municipal services, such as sewage and building code enforcement. In 1958, a study recommended that the city of Jacksonville begin annexing outlying communities in order to create the needed tax base to improve services throughout the county. Voters outside the city limits rejected annexation plans in six referendums between 1960 and 1965. </details>
  
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -60,6 +67,7 @@ These sample answers are incorrect
 
 <details><summary>Context</summary> Under the Scotland Act 1998, ordinary general elections for the Scottish Parliament are held on the first Thursday in May every four years (1999, 2003, 2007 and so on). The date of the poll may be varied by up to one month either way by the Monarch on the proposal of the Presiding Officer. If the Parliament itself resolves that it should be dissolved (with at least two-thirds of the Members voting in favour), or if the Parliament fails to nominate one of its members to be First Minister within 28 days of a General Election or of the position becoming vacant, the Presiding Officer proposes a date for an extraordinary general election and the Parliament is dissolved by the Queen by royal proclamation. Extraordinary general elections are in addition to ordinary general elections, unless held less than six months before the due date of an ordinary general election, in which case they supplant it. The following ordinary election reverts to the first Thursday in May, a multiple of four years after 1999 (i.e., 5 May 2011, 7 May 2015, etc.). </details>
 
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
@@ -69,7 +77,7 @@ These sample answers are incorrect
 
 ---
 
-These sample answers are correct
+# Sample Correct Answers
 
 
 | Question | Submitted Answer | Correct Answer | Reason |
@@ -107,6 +115,7 @@ These sample answers are correct
 
 <details><summary>Context</summary> The 2018 PGA Championship was the 100th PGA Championship, held on August 9 -- 12 at Bellerive Country Club in Town and Country, Missouri, a suburb west of St. Louis. This was the second PGA Championship  (1992) and third major  (1965 U.S. Open) held at Bellerive. It was also the last to be held in the month of August. Just before the 2017 tournament, the PGA announced that the Championship will move to May in 2019.  </details>
 
+---
 
 | Question | Submitted Answer | Correct Answer | Reason |
 |----------|------------------|----------------|--------|
