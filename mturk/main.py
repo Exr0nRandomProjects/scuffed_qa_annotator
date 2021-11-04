@@ -2,6 +2,9 @@ import boto3
 from datetime import datetime
 import json
 from time import sleep
+import xmltodict
+import csv
+from tqdm import tqdm
 
 from creds import ACCESS_ID, ACCESS_KEY
 
@@ -26,28 +29,50 @@ tweets = ['in science class right now... urgh... stupid project..',
 TaskAttributes = {
     'MaxAssignments': 5,
     # How long the task will be available on MTurk (1 hour)
-    'LifetimeInSeconds': 60*60,
+    # 'LifetimeInSeconds': 60*60,
+    'LifetimeInSeconds': 60*5,
     # How long Workers have to complete each item (10 minutes)
     'AssignmentDurationInSeconds': 60*10,
     # The reward you will offer Workers for each response
     'Reward': '0.05',
-    'Title': 'Provide sentiment for a Tweet',
-    'Keywords': 'sentiment, tweet',
-    'Description': 'Rate the sentiment of a tweet on a scale of 1 to 10.'
+    'Title': 'Compare trivia questions and answers!',
+    'Keywords': 'question answering',
+    'Description': 'Rate the correctness of a trivia answer on a scale of 1 to 5.'
 }
+
+question_template = '''
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"
+OKAY WHAT THE HECK
+<table class="m-auto text-mono">
+<tr><td class="text-gray-600">question</td><td class='max-w-prose p-4'>{}</td></tr>
+<tr><td class="text-gray-600">submitted answer</td><td class='max-w-prose p-4'>{}</td></tr>
+<tr><td class="text-gray-600">correct answers</td><td class='max-w-prose p-4'>{}</td></tr>
+<tr><td class="text-gray-600">context</td><td class='max-w-prose p-4'>{}</td></tr>
+</table>
+'''
 
 results = []
 hit_type_id = ''
-for tweet in tweets:
+# for tweet in tweets:
+
+with open('data.tsv', 'r') as csv_rf:
+    reader = csv.reader(csv_rf, delimiter="	")
+    qaps = [row for row in reader]
+
+print('creating HITs...')
+for qid, context, question, m_answer, g_answers in tqdm(qaps):
+    print(question_template.format(question, m_answer, g_answers, context))
     response = client.create_hit(
         **TaskAttributes,
-        Question=question_xml.replace('${content}',tweet)
+        Question=question_xml.replace("${content}", question_template.format(question, m_answer, g_answers, context))
     )
     hit_type_id = response['HIT']['HITTypeId']
     results.append({
-        'tweet': tweet,
+        'data': (qid, context, question, m_answer, g_answers),
         'hit_id': response['HIT']['HITId']
     })
+
+    break
 
 print("You can view the HITs here:")
 # print(mturk_environment['preview']+"?groupId={}".format(hit_type_id))
