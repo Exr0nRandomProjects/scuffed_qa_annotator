@@ -4,6 +4,7 @@ import json
 import boto3
 import xmltodict
 from datetime import datetime
+from tqdm import tqdm
 
 client = boto3.client(
         'mturk',
@@ -14,15 +15,16 @@ client = boto3.client(
 results = []
 next_page = None
 while True:
-    got = client.list_hits(MaxResults=100, NextToken=got['NextToken']) if next_page else client.list_hits(MaxResults=10)
+    got = client.list_hits(MaxResults=100, NextToken=next_page) if next_page else client.list_hits(MaxResults=100)
     results += got['HITs']
-    # if 'NextToken' in got:
-    next_page = got['NextToken']
-    print(got['NextToken'])
+    if 'NextToken' in got:
+        next_page = got['NextToken']
 
     print(len(results))
+    if got['NumResults'] == 0:
+        break
 
-for item in results:
+for item in tqdm(results):
     # Get the status of the HIT
     hit = client.get_hit(HITId=item['HITId'])
     item['status'] = hit['HIT']['HITStatus']
