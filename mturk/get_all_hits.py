@@ -7,7 +7,7 @@ from datetime import datetime
 from tqdm import tqdm
 from bs4 import BeautifulSoup
 import lxml
-import pandas
+import pandas as pd
 
 client = boto3.client(
         'mturk',
@@ -64,10 +64,13 @@ for item in tqdm(results):
     if len(answers) > 0:
         item['avg_answer'] = sum(answers)/len(answers)
 
-original_data = pandas.read_csv('data.tsv', delimiter='	', names=['id', 'context', 'question', 'model_answer', 'gold_answers'])
-new_data = pandas.DataFrame(columns=['question', 'mturk_scores', 'avg_score'])
+original_data = pd.read_csv('data.tsv', delimiter='	', names=['id', 'context', 'question', 'model_answer', 'gold_answers'])
+original_data['mturk_scores'] = [[]] * len(original_data)
+original_data['avg_score'] = [0] * len(original_data)
+original_data['mturk_scores'] = original_data['mturk_scores'].astype(object)
+print(original_data)
+print(original_data['mturk_scores'])
 for item in results:
-    # soup = BeautifulSoup(item['Question'], 'html.parser')
     soup = BeautifulSoup(item['Question'], 'lxml')
     qap_raw = [x.next_sibling.contents[0] for x in soup.find_all("td", { 'class': "text-gray-600" })]
 
@@ -75,12 +78,24 @@ for item in results:
 
     assert len(data_row) == 1
     assert 'avg_answer' in item
+    # original_data.at[data_row.index, 'mturk_scores'] = item['answers'] if len(item['answers']) > 1 else [item['answers']]
+    # original_data.at[data_row.index, 'mturk_scores'] = (*item['answers'], 0)
+    print(type(original_data.loc[data_row.index, 'mturk_scores']))
+    # original_data.loc[data_row.index, 'mturk_scores'].append(item['answers'])
+    original_data.loc[data_row.index, 'mturk_scores'] = pd.Series([item['answers']], index=data_row.index, dtype=object)
 
-    new_data = new_data.append({ 'question': data_row['question'], 'mturk_scores': tuple(item['answers']), 'avg_score': item['avg_answer'] }, ignore_index=True)
+    # original_data[original_data['question'] == qap_raw[0]]['avg_score'] = item['avg_answer']
+    # data_row['mturk_scores']
+    # data_row['avg_score'] = item['avg_score']
 
-print(new_data)
-combo_data = original_data.merge(new_data, how='left', on='question')
-print(combo_data)
+    # new_data = new_data.append({ 'question': data_row['question'], 'mturk_scores': tuple(item['answers']), 'avg_score': item['avg_answer'] }, ignore_index=True)
+
+# print(new_data)
+# combo_data = original_data.merge(new_data, how='left', on='question')
+# print(combo_data)
+
+print(original_data[original_data['mturk_scores'].map(print) > 0])
+print(original_data[original_data['mturk_scores'].map(len) > 0])
 # print(combo_data[~combo_data['mturk_scores'].isna()])
 
 print(datetime.now(), end="\n\n")
