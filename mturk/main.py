@@ -10,7 +10,8 @@ from creds import ACCESS_ID, ACCESS_KEY
 
 client = boto3.client(
         'mturk',
-        endpoint_url='https://mturk-requester.us-east-1.amazonaws.com',
+        # endpoint_url='https://mturk-requester.us-east-1.amazonaws.com',
+        endpoint_url='https://mturk-requester-sandbox.us-east-1.amazonaws.com',
         aws_access_key_id=ACCESS_ID,
         aws_secret_access_key=ACCESS_KEY)
 
@@ -20,11 +21,6 @@ QUESTION_XML = """<HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMe
         <FrameHeight>650</FrameHeight>
         </HTMLQuestion>"""
 question_xml = QUESTION_XML.format(html_layout)
-
-tweets = ['in science class right now... urgh... stupid project..',
-          'hmmm what to have for breaky?... Honey on toast ',
-          'Doing home work  x',
-          'Headed out of town for a few days. Will miss my girls']
 
 TaskAttributes = {
     'MaxAssignments': 1,
@@ -41,8 +37,6 @@ TaskAttributes = {
 }
 
 question_template = '''
-<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"
-OKAY WHAT THE HECK
 <table class="m-auto text-mono">
 <tr><td class="text-gray-600">question</td><td class='max-w-prose p-4'>{}</td></tr>
 <tr><td class="text-gray-600">submitted answer</td><td class='max-w-prose p-4'>{}</td></tr>

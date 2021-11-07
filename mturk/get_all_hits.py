@@ -5,6 +5,9 @@ import boto3
 import xmltodict
 from datetime import datetime
 from tqdm import tqdm
+from bs4 import BeautifulSoup
+import lxml
+import pandas
 
 client = boto3.client(
         'mturk',
@@ -15,7 +18,7 @@ client = boto3.client(
 results = []
 next_page = None
 while True:
-    got = client.list_hits(MaxResults=100, NextToken=next_page) if next_page else client.list_hits(MaxResults=100)
+    got = client.list_hits(MaxResults=100, NextToken=next_page) if next_page else client.list_hits(MaxResults=10)
     results += got['HITs']
     if 'NextToken' in got:
         next_page = got['NextToken']
@@ -23,6 +26,7 @@ while True:
     print(len(results))
     if got['NumResults'] == 0:
         break
+    break
 
 for item in tqdm(results):
     # Get the status of the HIT
@@ -60,11 +64,24 @@ for item in tqdm(results):
     if len(answers) > 0:
         item['avg_answer'] = sum(answers)/len(answers)
 
+original_data = pandas.read_csv('data.tsv', delimiter='	', names=['id', 'context', 'question', 'model_answer', 'gold_answers'])
+new_data = pandas.DataFrame(columns=['question', 'mturk_scores', 'avg_score'])
 for item in results:
-    if 'avg_answer' in item:
-        print(item['avg_answer'], item['answers'])
-    else:
-        print(item)
+    # soup = BeautifulSoup(item['Question'], 'html.parser')
+    soup = BeautifulSoup(item['Question'], 'lxml')
+    qap_raw = [x.next_sibling.contents[0] for x in soup.find_all("td", { 'class': "text-gray-600" })]
+
+    data_row = original_data[original_data['question'] == qap_raw[0]]
+
+    assert len(data_row) == 1
+    assert 'avg_answer' in item
+
+    new_data = new_data.append({ 'question': data_row['question'], 'mturk_scores': tuple(item['answers']), 'avg_score': item['avg_answer'] }, ignore_index=True)
+
+print(new_data)
+combo_data = original_data.merge(new_data, how='left', on='question')
+print(combo_data)
+# print(combo_data[~combo_data['mturk_scores'].isna()])
 
 print(datetime.now(), end="\n\n")
 
