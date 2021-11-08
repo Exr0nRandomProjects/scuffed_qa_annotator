@@ -18,7 +18,7 @@ client = boto3.client(
 results = []
 next_page = None
 while True:
-    got = client.list_hits(MaxResults=100, NextToken=next_page) if next_page else client.list_hits(MaxResults=10)
+    got = client.list_hits(MaxResults=100, NextToken=next_page) if next_page else client.list_hits(MaxResults=100)
     results += got['HITs']
     if 'NextToken' in got:
         next_page = got['NextToken']
@@ -26,7 +26,6 @@ while True:
     print(len(results))
     if got['NumResults'] == 0:
         break
-    break
 
 for item in tqdm(results):
     # Get the status of the HIT
@@ -52,17 +51,19 @@ for item in tqdm(results):
         answer = answer_dict['QuestionFormAnswers']['Answer']['FreeText']
         answers.append(int(answer))
 
-        # # Approve the Assignment (if it hasn't been already)
-        # if assignment['AssignmentStatus'] == 'Submitted':
-        #     client.approve_assignment(
-        #         AssignmentId=assignment_id,
-        #         OverrideRejection=False
-        #     )
+        # Approve the Assignment (if it hasn't been already)
+        if assignment['AssignmentStatus'] == 'Submitted':
+            client.reject_assignment(
+                AssignmentId=assignment_id,
+                OverrideRejection=False
+            )
 
     # Add the answers that have been retrieved for this item
     item['answers'] = answers
     if len(answers) > 0:
         item['avg_answer'] = sum(answers)/len(answers)
+
+exit()
 
 original_data = pd.read_csv('data.tsv', delimiter='	', names=['id', 'context', 'question', 'model_answer', 'gold_answers'])
 original_data['mturk_scores'] = [[]] * len(original_data)
@@ -78,25 +79,15 @@ for item in results:
 
     assert len(data_row) == 1
     assert 'avg_answer' in item
-    # original_data.at[data_row.index, 'mturk_scores'] = item['answers'] if len(item['answers']) > 1 else [item['answers']]
-    # original_data.at[data_row.index, 'mturk_scores'] = (*item['answers'], 0)
-    print(type(original_data.loc[data_row.index, 'mturk_scores']))
-    # original_data.loc[data_row.index, 'mturk_scores'].append(item['answers'])
+
     original_data.loc[data_row.index, 'mturk_scores'] = pd.Series([item['answers']], index=data_row.index, dtype=object)
+    original_data.loc[data_row.index, 'avg_score'] = item['avg_answer']
 
-    # original_data[original_data['question'] == qap_raw[0]]['avg_score'] = item['avg_answer']
-    # data_row['mturk_scores']
-    # data_row['avg_score'] = item['avg_score']
+# print(original_data[original_data['mturk_scores'].map(print) > 0])
+# print(original_data[original_data['mturk_scores'].map(len) > 0])
 
-    # new_data = new_data.append({ 'question': data_row['question'], 'mturk_scores': tuple(item['answers']), 'avg_score': item['avg_answer'] }, ignore_index=True)
-
-# print(new_data)
-# combo_data = original_data.merge(new_data, how='left', on='question')
-# print(combo_data)
-
-print(original_data[original_data['mturk_scores'].map(print) > 0])
-print(original_data[original_data['mturk_scores'].map(len) > 0])
-# print(combo_data[~combo_data['mturk_scores'].isna()])
+print(original_data)
+original_data.to_csv('mturk_round_1.tsv', sep='	')
 
 print(datetime.now(), end="\n\n")
 
