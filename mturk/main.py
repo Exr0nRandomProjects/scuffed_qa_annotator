@@ -97,12 +97,12 @@ with open(f"out/results_{datetime.now()}_log.txt", "w") as wf:
                 answer = answer_dict['QuestionFormAnswers']['Answer']['FreeText']
                 answers.append(int(answer))
 
-                # Approve the Assignment (if it hasn't been already)
-                if assignment['AssignmentStatus'] == 'Submitted':
-                    client.approve_assignment(
-                        AssignmentId=assignment_id,
-                        OverrideRejection=False
-                    )
+                # # Approve the Assignment (if it hasn't been already)
+                # if assignment['AssignmentStatus'] == 'Submitted':
+                #     client.approve_assignment(
+                #         AssignmentId=assignment_id,
+                #         OverrideRejection=False
+                #     )
 
             # Add the answers that have been retrieved for this item
             item['answers'] = answers
